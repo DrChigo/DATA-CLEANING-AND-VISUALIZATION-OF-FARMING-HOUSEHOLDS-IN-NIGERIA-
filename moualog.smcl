@@ -1,0 +1,534 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\RENET\OneDrive\Desktop\MOUA STATA TRAINING\Log\moualog.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Jan 2024, 06:30:18
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\RENET\AppData\Local\Temp\STD01000000.tmp"
+{txt}
+{com}. import excel using "Data\hhdata", sheet("esut") firstrow case(preserve) clear
+{res}{txt}
+{com}. label var s1q2 "sex of household members"
+{txt}
+{com}. label var s1q3 "Relationship to household head"
+{txt}
+{com}. label define s1q2 1"Male" 0"Female", replace 
+{txt}
+{com}. label value s1q2 sex
+{txt}
+{com}. label value s1q2 s1q2
+{txt}
+{com}. save "Output\hhdata2", replace
+{txt}file Output\hhdata2.dta saved
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\RENET\AppData\Local\Temp\STD01000000.tmp"
+{txt}
+{com}. use "Data\hhdata", clear 
+{txt}
+{com}. *to check for consistency in data
+. sum  //summarize//
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}zone {c |}{res}     32,821    3.318942    1.645885          1          6
+{txt}{space 7}state {c |}{res}     32,821    18.59489    10.46824          1         37
+{txt}{space 9}lga {c |}{res}     32,821    1871.347    1046.692        102       3706
+{txt}{space 6}sector {c |}{res}     32,821    1.711039    .4532868          1          2
+{txt}{space 8}hhid {c |}{res}     32,821    185585.5    104705.6      10001     370040
+{txt}{hline 13}{c +}{hline 57}
+{space 7}indiv {c |}{res}     32,821    4.977484    3.472432          1         34
+{txt}{space 8}s1q2 {c |}{res}     32,821    1.509674     .499914          1          2
+{txt}{space 8}s1q3 {c |}{res}     32,811    3.354424     2.48945          1         15
+{txt}{space 8}s1q4 {c |}{res}     26,171    24.52677     20.0051          0        103
+{txt}{space 8}s1q7 {c |}{res}     26,171     5.18895    2.621307          1          7
+{txt}{hline 13}{c +}{hline 57}
+{space 6}s1q12b {c |}{res}     26,112     1.67019     .470153          1          2
+{txt}{space 7}s2aq9 {c |}{res}     17,683    22.65226    12.31727          0         61
+{txt}
+{com}. sum s1q4
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}s1q4 {c |}{res}     26,171    24.52677     20.0051          0        103
+{txt}
+{com}. sum s1q4, detail
+
+                   {txt}AGE IN COMPLETED YEARS
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}        0              0
+{txt} 5%    {res}        2              0
+{txt}10%    {res}        4              0       {txt}Obs         {res}     26,171
+{txt}25%    {res}        9              0       {txt}Sum of Wgt. {res}     26,171
+
+{txt}50%    {res}       18                      {txt}Mean          {res} 24.52677
+                        {txt}Largest       Std. Dev.     {res}  20.0051
+{txt}75%    {res}       37            100
+{txt}90%    {res}       55            100       {txt}Variance      {res}  400.204
+{txt}95%    {res}       65            101       {txt}Skewness      {res} .9689404
+{txt}99%    {res}       80            103       {txt}Kurtosis      {res} 3.131721
+{txt}
+{com}. describe
+
+{txt}Contains data from {res}Data\hhdata.dta
+{txt}  obs:{res}        32,821                          
+{txt} vars:{res}            12                          30 Apr 2018 10:01
+{txt} size:{res}       557,957                          
+{txt}{hline}
+              storage   display    value
+variable name   type    format     label      variable label
+{hline}
+{p 0 48}{res}{bind:zone           }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:zone     }{bind:  }{res}{res}ZONE CODE{p_end}
+{p 0 48}{bind:state          }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:state    }{bind:  }{res}{res}STATE CODE{p_end}
+{p 0 48}{bind:lga            }{txt}{bind: int     }{bind:{txt}%16.0g    }{space 1}{bind:lga      }{bind:  }{res}{res}LGA CODE{p_end}
+{p 0 48}{bind:sector         }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:sector   }{bind:  }{res}{res}SECTOR{p_end}
+{p 0 48}{bind:hhid           }{txt}{bind: long    }{bind:{txt}%16.0g    }{space 1}{bind:         }{bind:  }{res}{res}HOUSEHOLD IDENTIFICATION{p_end}
+{p 0 48}{bind:indiv          }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:         }{bind:  }{res}{res}INDIVIDUAL ID{p_end}
+{p 0 48}{bind:s1q2           }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:s1q2     }{bind:  }{res}{res}SEX{p_end}
+{p 0 48}{bind:s1q3           }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:s1q3     }{bind:  }{res}{res}RELATIONSHIP TO HEAD OF HH{p_end}
+{p 0 48}{bind:s1q4           }{txt}{bind: int     }{bind:{txt}%16.0g    }{space 1}{bind:         }{bind:  }{res}{res}AGE IN COMPLETED YEARS{p_end}
+{p 0 48}{bind:s1q7           }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:s1q7     }{bind:  }{res}{res}MARITAL STATUS{p_end}
+{p 0 48}{bind:s1q12b         }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:s1q12b   }{bind:  }{res}{res}DOES [NAME] OWN A MOBILE PHONE?{p_end}
+{p 0 48}{bind:s2aq9          }{txt}{bind: byte    }{bind:{txt}%16.0g    }{space 1}{bind:s2aq9    }{bind:  }{res}{res}WHAT IS THE HIGHEST EDUCATIONAL LEVEL [NAME] HAS COMPLETED?{p_end}
+{txt}{hline}
+Sorted by: {res}zone  state  lga  sector
+{txt}
+{com}. codebook s1q3, tab(1000)
+
+{txt}{hline}
+{res}s1q3{right:RELATIONSHIP TO HEAD OF HH}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+{ralign 22:label}:  {res:s1q3}
+
+{col 18}range:  [{res}1{txt},{res}15{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}15{col 51}{txt}missing .:  {res}10{txt}/{res}32,821
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}     4,580{col 33}       1{col 43}{txt}1. HEAD
+{col 21}{res}     4,681{col 33}       2{col 43}{txt}2. SPOUSE
+{col 21}{res}    18,858{col 33}       3{col 43}{txt}3. OWN CHILD
+{col 21}{res}       265{col 33}       4{col 43}{txt}4. STEP CHILD
+{col 21}{res}        57{col 33}       5{col 43}{txt}5. ADOPTED CHILD
+{col 21}{res}     1,508{col 33}       6{col 43}{txt}6. GRANDCHILD
+{col 21}{res}       662{col 33}       7{col 43}{txt}7. BROTHER/SISTER
+{col 21}{res}       463{col 33}       8{col 43}{txt}8. NIECE/NEPHEW
+{col 21}{res}       298{col 33}       9{col 43}{txt}9. BROTHER/SISTER INLAW
+{col 21}{res}       407{col 33}      10{col 43}{txt}10. PARENT
+{col 21}{res}        47{col 33}      11{col 43}{txt}11. PARENT IN LAW
+{col 21}{res}       153{col 33}      12{col 43}{txt}12. DOMESTIC HELP (RESIDENT)
+{col 21}{res}        27{col 33}      13{col 43}{txt}13. DOMESTIC HELP (NON RESIDENT)
+{col 21}{res}       716{col 33}      14{col 43}{txt}14. OTHER RELATION (SPECIFY)
+{col 21}{res}        89{col 33}      15{col 43}{txt}15. OTHER NON RELATION (SPECIFY)
+{col 21}{res}        10{col 33}       .{col 43}
+{txt}
+{com}. codebook s1q7, tab(1000)
+
+{txt}{hline}
+{res}s1q7{right:MARITAL STATUS}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+{ralign 22:label}:  {res:s1q7}
+
+{col 18}range:  [{res}1{txt},{res}7{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}7{col 51}{txt}missing .:  {res}6,650{txt}/{res}32,821
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}     5,763{col 33}       1{col 43}{txt}1. MARRIED (MONOGAMOUS)
+{col 21}{res}     2,229{col 33}       2{col 43}{txt}2. MARRIED (POLYGAMOUS)
+{col 21}{res}        11{col 33}       3{col 43}{txt}3. INFORMAL UNION
+{col 21}{res}        57{col 33}       4{col 43}{txt}4. DIVORCED
+{col 21}{res}       159{col 33}       5{col 43}{txt}5. SEPARATED
+{col 21}{res}     1,141{col 33}       6{col 43}{txt}6. WIDOWED
+{col 21}{res}    16,811{col 33}       7{col 43}{txt}7. NEVER MARRIED
+{col 21}{res}     6,650{col 33}       .{col 43}
+{txt}
+{com}. sort hhid
+{txt}
+{com}. order s1q2, after(state)
+{txt}
+{com}. order s1q7, before(s1q12b)
+{txt}
+{com}. sort state lga
+{txt}
+{com}. sort hhid indiv
+{txt}
+{com}. " informal Union" 3 "once married" 4 "never married",replace
+{bf}{err}" informal Union{sf} is not a valid command name
+{txt}{search r(199), local:r(199);}
+
+end of do-file
+
+{search r(199), local:r(199);}
+
+{com}. do "C:\Users\RENET\AppData\Local\Temp\STD01000000.tmp"
+{txt}
+{com}. gen hhsex=s1q2 if s1q3==1
+{txt}(28,241 missing values generated)
+
+{com}. replace hhsex=0 if hhsex==2
+{txt}(932 real changes made)
+
+{com}. label define hhsex 1 "Male" 0 "Female", replace
+{txt}
+{com}. label value hhsex hhsex
+{txt}
+{com}. tab hhsex
+
+      {txt}hhsex {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}        932       20.35       20.35
+{txt}       Male {c |}{res}      3,648       79.65      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      4,580      100.00
+{txt}
+{com}. gen hhage=s1q4 if s1q3==1
+{txt}(28,241 missing values generated)
+
+{com}. recode s1q7 (1 2 =1) (3 =2) (4 5 6=3) (7 =4) if s1q3==1, gen(mstat)
+{txt}(2031 differences between s1q7 and mstat)
+
+{com}. label define mstat 1 "married" 2 " informal Union" 3 "once married" 4 "never married",replace
+{txt}
+{com}. label value mstat mstat
+{txt}
+{com}. tab mstat
+
+ {txt}RECODE of s1q7 {c |}
+       (MARITAL {c |}
+        STATUS) {c |}      Freq.     Percent        Cum.
+{hline 16}{c +}{hline 35}
+        married {c |}{res}      3,405       74.34       74.34
+{txt} informal Union {c |}{res}          3        0.07       74.41
+{txt}   once married {c |}{res}      1,018       22.23       96.64
+{txt}  never married {c |}{res}        154        3.36      100.00
+{txt}{hline 16}{c +}{hline 35}
+          Total {c |}{res}      4,580      100.00
+{txt}
+{com}. *Extended generate (egen)
+. egen mphone=min(s1q12b), by(hhid)
+{txt}(7 missing values generated)
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\RENET\AppData\Local\Temp\STD01000000.tmp"
+{txt}
+{com}. egen hhsize=count(indiv), by(hhid)
+{txt}
+{com}. tab hhage
+
+      {txt}hhage {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         16 {c |}{res}          3        0.07        0.07
+{txt}         17 {c |}{res}          1        0.02        0.09
+{txt}         18 {c |}{res}          4        0.09        0.17
+{txt}         19 {c |}{res}          2        0.04        0.22
+{txt}         20 {c |}{res}          6        0.13        0.35
+{txt}         21 {c |}{res}          6        0.13        0.48
+{txt}         22 {c |}{res}          7        0.15        0.63
+{txt}         23 {c |}{res}         13        0.28        0.92
+{txt}         24 {c |}{res}          6        0.13        1.05
+{txt}         25 {c |}{res}         22        0.48        1.53
+{txt}         26 {c |}{res}         16        0.35        1.88
+{txt}         27 {c |}{res}         12        0.26        2.14
+{txt}         28 {c |}{res}         19        0.41        2.55
+{txt}         29 {c |}{res}         26        0.57        3.12
+{txt}         30 {c |}{res}         60        1.31        4.43
+{txt}         31 {c |}{res}         40        0.87        5.31
+{txt}         32 {c |}{res}         60        1.31        6.62
+{txt}         33 {c |}{res}         77        1.68        8.30
+{txt}         34 {c |}{res}         47        1.03        9.32
+{txt}         35 {c |}{res}        106        2.31       11.64
+{txt}         36 {c |}{res}         79        1.72       13.36
+{txt}         37 {c |}{res}         89        1.94       15.31
+{txt}         38 {c |}{res}        107        2.34       17.64
+{txt}         39 {c |}{res}         74        1.62       19.26
+{txt}         40 {c |}{res}        129        2.82       22.07
+{txt}         41 {c |}{res}         96        2.10       24.17
+{txt}         42 {c |}{res}        104        2.27       26.44
+{txt}         43 {c |}{res}        146        3.19       29.63
+{txt}         44 {c |}{res}         72        1.57       31.20
+{txt}         45 {c |}{res}        163        3.56       34.76
+{txt}         46 {c |}{res}         96        2.10       36.86
+{txt}         47 {c |}{res}        103        2.25       39.10
+{txt}         48 {c |}{res}        134        2.93       42.03
+{txt}         49 {c |}{res}         95        2.07       44.10
+{txt}         50 {c |}{res}        149        3.25       47.36
+{txt}         51 {c |}{res}         87        1.90       49.26
+{txt}         52 {c |}{res}        122        2.66       51.92
+{txt}         53 {c |}{res}        138        3.01       54.93
+{txt}         54 {c |}{res}         67        1.46       56.40
+{txt}         55 {c |}{res}        144        3.14       59.54
+{txt}         56 {c |}{res}         84        1.83       61.38
+{txt}         57 {c |}{res}         79        1.72       63.10
+{txt}         58 {c |}{res}        116        2.53       65.63
+{txt}         59 {c |}{res}         64        1.40       67.03
+{txt}         60 {c |}{res}        132        2.88       69.91
+{txt}         61 {c |}{res}         81        1.77       71.68
+{txt}         62 {c |}{res}         89        1.94       73.62
+{txt}         63 {c |}{res}        111        2.42       76.05
+{txt}         64 {c |}{res}         60        1.31       77.36
+{txt}         65 {c |}{res}        118        2.58       79.93
+{txt}         66 {c |}{res}         54        1.18       81.11
+{txt}         67 {c |}{res}         65        1.42       82.53
+{txt}         68 {c |}{res}        101        2.21       84.74
+{txt}         69 {c |}{res}         47        1.03       85.76
+{txt}         70 {c |}{res}         99        2.16       87.93
+{txt}         71 {c |}{res}         44        0.96       88.89
+{txt}         72 {c |}{res}         49        1.07       89.96
+{txt}         73 {c |}{res}         68        1.48       91.44
+{txt}         74 {c |}{res}         24        0.52       91.97
+{txt}         75 {c |}{res}         45        0.98       92.95
+{txt}         76 {c |}{res}         30        0.66       93.60
+{txt}         77 {c |}{res}         25        0.55       94.15
+{txt}         78 {c |}{res}         29        0.63       94.78
+{txt}         79 {c |}{res}         15        0.33       95.11
+{txt}         80 {c |}{res}         33        0.72       95.83
+{txt}         81 {c |}{res}         28        0.61       96.44
+{txt}         82 {c |}{res}         28        0.61       97.05
+{txt}         83 {c |}{res}         37        0.81       97.86
+{txt}         84 {c |}{res}         11        0.24       98.10
+{txt}         85 {c |}{res}         23        0.50       98.60
+{txt}         86 {c |}{res}          7        0.15       98.76
+{txt}         87 {c |}{res}         16        0.35       99.10
+{txt}         88 {c |}{res}         11        0.24       99.34
+{txt}         89 {c |}{res}          3        0.07       99.41
+{txt}         90 {c |}{res}          3        0.07       99.48
+{txt}         91 {c |}{res}          4        0.09       99.56
+{txt}         92 {c |}{res}          2        0.04       99.61
+{txt}         93 {c |}{res}          5        0.11       99.72
+{txt}         94 {c |}{res}          1        0.02       99.74
+{txt}         95 {c |}{res}          2        0.04       99.78
+{txt}         96 {c |}{res}          2        0.04       99.83
+{txt}         98 {c |}{res}          2        0.04       99.87
+{txt}        100 {c |}{res}          5        0.11       99.98
+{txt}        103 {c |}{res}          1        0.02      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      4,580      100.00
+{txt}
+{com}. /* 16 - 20
+> 21 - 40
+> 41 - 60
+> 61 - 80
+> 81 - 100
+> 101 - 120*/
+. egen hhsize_grp=cut(hhage), at (16 21 41 61 81 101 121)
+{txt}(28241 missing values generated)
+
+{com}. tab hhsize_grp
+
+ {txt}hhsize_grp {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         16 {c |}{res}         16        0.35        0.35
+{txt}         21 {c |}{res}        995       21.72       22.07
+{txt}         41 {c |}{res}      2,191       47.84       69.91
+{txt}         61 {c |}{res}      1,187       25.92       95.83
+{txt}         81 {c |}{res}        190        4.15       99.98
+{txt}        101 {c |}{res}          1        0.02      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      4,580      100.00
+{txt}
+{com}. label define hhsize_grp 16 "16 - 20" 21 "21 - 40" 41 "41 - 60" 61 "61-80" 81 "81 - 100" 101 "101 - 120", replace
+{txt}
+{com}. label value hhsize_grp hhsize_grp
+{txt}
+{com}. label var hhsex "sex of the household head"
+{txt}
+{com}. label var hhage "Age of the hosuehold head"
+{txt}
+{com}. label var mphone "Mobile phone status of the household"
+{txt}
+{com}. label var hhsize "household size"
+{txt}
+{com}. ==5 & zone==1   //acres//
+{bf}{err}=={sf} is not a valid command name
+{txt}{search r(199), local:r(199);}
+
+end of do-file
+
+{search r(199), local:r(199);}
+
+{com}. do "C:\Users\RENET\AppData\Local\Temp\STD01000000.tmp"
+{txt}
+{com}. save "Output\dataclean", replace
+{txt}file Output\dataclean.dta saved
+
+{com}. 
+. use "Data\plotdata", clear
+{txt}
+{com}. codebook sa3iq5b
+
+{txt}{hline}
+{res}sa3iq5b{right:WHAT WAS THE LAND AREA OF [CROP] HARVESTED? (UNIT CODE)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+{ralign 22:label}:  {res:sa3iq5b}
+
+{col 18}range:  [{res}1{txt},{res}7{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}7{col 51}{txt}missing .:  {res}5{txt}/{res}1,664
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       310{col 33}       1{col 43}{txt}1. HEAPS
+{col 21}{res}       408{col 33}       2{col 43}{txt}2. RIDGES
+{col 21}{res}       257{col 33}       3{col 43}{txt}3. STANDS
+{col 21}{res}       254{col 33}       4{col 43}{txt}4. PLOTS
+{col 21}{res}       345{col 33}       5{col 43}{txt}5. ACRES
+{col 21}{res}        73{col 33}       6{col 43}{txt}6. HECTARES
+{col 21}{res}        12{col 33}       7{col 43}{txt}7. SQUARE METRES
+{col 21}{res}         5{col 33}       .{col 43}
+{txt}
+{com}. gen plotsize=.
+{txt}(1,664 missing values generated)
+
+{com}. *conversion factors
+. /*plots=0.0667
+> Accres=0.4
+> Hectare=1
+> sq Meters= 0.0001*/
+. *North central = 1
+. replace plotsize=sa3iq5a*0.00012 if sa3iq5b==1 & zone==1 //heaps//
+{txt}(47 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0027 if sa3iq5b==2 & zone==1  //ridges//
+{txt}(36 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.00006 if sa3iq5b==3 & zone==1 //stands//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.667 if sa3iq5b==4 & zone==1   //plot//
+{txt}(130 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.04 if sa3iq5b==5 & zone==1   //acres//
+{txt}(101 real changes made)
+
+{com}. replace plotsize=sa3iq5a*1 if sa3iq5b==6 & zone==1     //ha//
+{txt}(12 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0001 if sa3iq5b==7 & zone==1  //sqm//
+{txt}(0 real changes made)
+
+{com}. *north east = 2
+. replace plotsize=sa3iq5a*0.00016 if sa3iq5b==1 & zone==2 //heaps//
+{txt}(1 real change made)
+
+{com}. replace plotsize=sa3iq5a*0.004 if sa3iq5b==2 & zone==2  //ridges//
+{txt}(125 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.00016 if sa3iq5b==3 & zone==2 //stands//
+{txt}(7 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.667 if sa3iq5b==4 & zone==2   //plot//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.04 if sa3iq5b==5 & zone==2   //acres//
+{txt}(125 real changes made)
+
+{com}. replace plotsize=sa3iq5a*1 if sa3iq5b==6 & zone==2     //ha//
+{txt}(58 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0001 if sa3iq5b==7 & zone==2  //sqm//
+{txt}(11 real changes made)
+
+{com}. *North west =3 
+. replace plotsize=sa3iq5a*0.00011 if sa3iq5b==1 & zone==3 //heaps//
+{txt}(2 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.00494 if sa3iq5b==2 & zone==3  //ridges//
+{txt}(239 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.00006 if sa3iq5b==3 & zone==3 //stands//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.00004 if sa3iq5b==4 & zone==3   //plot//
+{txt}(29 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.04 if sa3iq5b==5 & zone==3   //acres//
+{txt}(62 real changes made)
+
+{com}. replace plotsize=sa3iq5a*1 if sa3iq5b==6 & zone==3     //ha//
+{txt}(3 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0001 if sa3iq5b==7 & zone==3  //sqm//
+{txt}(0 real changes made)
+
+{com}. *south east =4 
+. replace plotsize=sa3iq5a*0.00019 if sa3iq5b==1 & zone==4 //heaps//
+{txt}(208 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0023 if sa3iq5b==2 & zone==4  //ridges//
+{txt}(8 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.00004 if sa3iq5b==3 & zone==4 //stands//
+{txt}(215 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.667 if sa3iq5b==4 & zone==4   //plot//
+{txt}(58 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.04 if sa3iq5b==5 & zone==4   //acres//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*1 if sa3iq5b==6 & zone==4     //ha//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0001 if sa3iq5b==7 & zone==4  //sqm//
+{txt}(1 real change made)
+
+{com}. *south south =5 
+. replace plotsize=sa3iq5a*0.00021 if sa3iq5b==1 & zone==5 //heaps//
+{txt}(22 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0023 if sa3iq5b==2 & zone==5  //ridges//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.00004 if sa3iq5b==3 & zone==5 //stands//
+{txt}(33 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.667 if sa3iq5b==4 & zone==5   //plot//
+{txt}(34 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.04 if sa3iq5b==5 & zone==5   //acres//
+{txt}(9 real changes made)
+
+{com}. replace plotsize=sa3iq5a*1 if sa3iq5b==6 & zone==5     //ha//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0001 if sa3iq5b==7 & zone==5  //sqm//
+{txt}(0 real changes made)
+
+{com}. *North west =6 
+. replace plotsize=sa3iq5a*0.00012 if sa3iq5b==1 & zone==6 //heaps//
+{txt}(30 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0027 if sa3iq5b==2 & zone==6  //ridges//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.00006 if sa3iq5b==3 & zone==6 //stands//
+{txt}(2 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.667 if sa3iq5b==4 & zone==6   //plot//
+{txt}(3 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.04 if sa3iq5b==5 & zone==6  //acres//
+{txt}(48 real changes made)
+
+{com}. replace plotsize=sa3iq5a*1 if sa3iq5b==6 & zone==6     //ha//
+{txt}(0 real changes made)
+
+{com}. replace plotsize=sa3iq5a*0.0001 if sa3iq5b==7 & zone==6  //sqm//
+{txt}(0 real changes made)
+
+{com}. 
+{txt}end of do-file
+
+{com}. 
